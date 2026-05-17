@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Feliz 5 Meses 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --pink: #e8587a;
+    --rose: #c93060;
+    --deep: #8b1a3a;
+    --cream: #fdf6f0;
+    --gold: #c8956c;
+  }
+
+  html, body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    touch-action: manipulation;
+  }
+
+  .screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.9s ease;
+  }
+  .screen.active { opacity: 1; pointer-events: all; }
+
+  /* ========= SCREEN 1 ========= */
+  #s1 { background: #fdf0f4; overflow: hidden; }
+  #s1-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .bokeh {
+    position: absolute; border-radius: 50%;
+    filter: blur(40px); opacity: 0.35;
+    animation: bokehDrift linear infinite;
+  }
+  @keyframes bokehDrift {
+    0%  { transform: translate(0,0) scale(1); }
+    33% { transform: translate(20px,-30px) scale(1.1); }
+    66% { transform: translate(-15px,20px) scale(0.95); }
+    100%{ transform: translate(0,0) scale(1); }
+  }
+  .petal {
+    position: absolute; opacity: 0;
+    animation: petalFall linear infinite; pointer-events: none;
+  }
+  @keyframes petalFall {
+    0%  { transform: translateY(-60px) rotate(0deg); opacity: 0; }
+    5%  { opacity: 0.7; }
+    95% { opacity: 0.4; }
+    100%{ transform: translateY(110vh) rotate(540deg); opacity: 0; }
+  }
+  .s1-content {
+    text-align: center; padding: 2rem; z-index: 2;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .s1-ornament {
+    font-size: 2rem; margin-bottom: 1.2rem; opacity: 0;
+    animation: fadeDown 1s ease 0.3s forwards; letter-spacing: 0.3em;
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-15px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  #typed-phrase {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2.6rem,10vw,4rem);
+    color: var(--rose);
+    text-shadow: 0 3px 30px rgba(201,48,96,0.2);
+    min-height: 4rem; line-height: 1.15;
+  }
+  .cursor-blink {
+    display: inline-block; width: 2px; height: 0.8em;
+    background: var(--rose); margin-left: 2px;
+    vertical-align: middle; animation: blink 0.8s step-end infinite;
+  }
+  .cursor-blink.hidden { display: none; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .divider-line {
+    width: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1.4rem auto; opacity: 0;
+    transition: width 1.2s ease, opacity 0.8s ease;
+  }
+  .divider-line.show { width: 160px; opacity: 1; }
+  #sub-phrase {
+    font-size: clamp(0.85rem,3.5vw,1.05rem); color: var(--deep);
+    opacity: 0; transform: translateY(8px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    font-weight: 300; letter-spacing: 0.18em; text-transform: uppercase;
+  }
+  #sub-phrase.show { opacity: 0.85; transform: translateY(0); }
+  .arrow-btn {
+    margin-top: 2.8rem; opacity: 0; transform: translateY(10px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    cursor: pointer; background: none; border: none;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  }
+  .arrow-btn.show { opacity: 1; transform: translateY(0); }
+  .arrow-btn-label { font-size: 0.7rem; color: var(--gold); font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; }
+  .arrow-icon {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--pink), var(--rose));
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 25px rgba(201,48,96,0.35), 0 0 0 8px rgba(201,48,96,0.08);
+    animation: pulseBtn 2s ease-in-out infinite; transition: transform 0.2s;
+  }
+  .arrow-icon:active { transform: scale(0.93); }
+  .arrow-icon svg { width: 20px; height: 20px; fill: white; }
+  @keyframes pulseBtn {
+    0%,100%{ box-shadow: 0 6px 25px rgba(201,48,96,0.35), 0 0 0 8px rgba(201,48,96,0.08); }
+    50%    { box-shadow: 0 6px 25px rgba(201,48,96,0.5), 0 0 0 16px rgba(201,48,96,0.04); }
+  }
+
+  /* ========= SCREEN 2 ========= */
+  #s2 {
+    background: radial-gradient(ellipse at 50% 0%, #1e0718 0%, #120310 60%, #0a020a 100%);
+    overflow: hidden;
+  }
+  #stars-container { position: absolute; inset: 0; pointer-events: none; }
+  .star {
+    position: absolute; background: white; border-radius: 50%;
+    animation: twinkle ease-in-out infinite alternate;
+  }
+  @keyframes twinkle {
+    from { opacity: 0.15; transform: scale(1); }
+    to   { opacity: 1; transform: scale(1.6); }
+  }
+  #aurora {
+    position: absolute; top: 0; left: 0; right: 0; height: 50%;
+    background:
+      radial-gradient(ellipse at 30% 0%, rgba(232,88,122,0.12) 0%, transparent 55%),
+      radial-gradient(ellipse at 70% 0%, rgba(180,60,120,0.10) 0%, transparent 50%);
+    pointer-events: none; animation: auroraShift 8s ease-in-out infinite alternate;
+  }
+  @keyframes auroraShift {
+    from { opacity: 0.6; transform: scaleX(1); }
+    to   { opacity: 1; transform: scaleX(1.1); }
+  }
+  #water {
+    position: absolute; bottom: 0; left: -10%; right: -10%; height: 100px;
+    background: linear-gradient(180deg, transparent 0%, rgba(80,140,200,0.18) 40%, rgba(40,90,160,0.35) 100%);
+    border-radius: 60% 60% 0 0 / 50% 50% 0 0;
+    animation: wave 3s ease-in-out infinite alternate;
+  }
+  @keyframes wave {
+    from { border-radius: 60% 60% 0 0 / 50% 50% 0 0; transform: translateX(0); }
+    to   { border-radius: 50% 70% 0 0 / 35% 60% 0 0; transform: translateX(-20px); }
+  }
+  #seal-wrap {
+    position: absolute; bottom: 12%;
+    display: flex; flex-direction: column; align-items: center;
+    transition: transform 1.8s cubic-bezier(0.4,0,0.2,1), opacity 1s ease;
+  }
+  #seal-wrap.exit { transform: translateY(130vh) !important; opacity: 0; }
+  #spin-heart {
+    font-size: 2rem; animation: spinHeart 0.8s linear infinite, heartBob 1.4s ease-in-out infinite alternate;
+    display: block; margin-bottom: -4px;
+    filter: drop-shadow(0 0 10px rgba(255,100,150,0.9));
+    position: relative; z-index: 2;
+  }
+  @keyframes spinHeart { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+  @keyframes heartBob {
+    from { margin-bottom: -4px; }
+    to   { margin-bottom: 6px; }
+  }
+  .seal-svg { width: 170px; height: auto; filter: drop-shadow(0 12px 35px rgba(232,88,122,0.45)); }
+  .seal-body { animation: sealBob 1.2s ease-in-out infinite alternate; }
+  @keyframes sealBob {
+    from { transform: translateY(0) rotate(-2deg); }
+    to   { transform: translateY(-10px) rotate(2deg); }
+  }
+  #envelope-wrap {
+    position: absolute; bottom: -220px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    transition: bottom 1.4s cubic-bezier(0.34,1.4,0.64,1);
+    cursor: pointer; z-index: 10;
+  }
+  #envelope-wrap.show { bottom: 14%; }
+  #env-label {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic;
+    color: #f8d0e0; text-align: center;
+    text-shadow: 0 2px 15px rgba(232,88,122,0.6);
+    opacity: 0; transition: opacity 0.6s ease 1s; letter-spacing: 0.05em;
+  }
+  #envelope-wrap.show #env-label { opacity: 1; }
+  .envelope-svg {
+    width: 130px; filter: drop-shadow(0 8px 30px rgba(201,48,96,0.6));
+    animation: envFloat 2.5s ease-in-out infinite alternate; transition: transform 0.2s;
+  }
+  .envelope-svg:active { transform: scale(0.95); }
+  @keyframes envFloat {
+    from { transform: translateY(0) rotate(-2deg); }
+    to   { transform: translateY(-12px) rotate(2deg); }
+  }
+
+  /* ========= LETTER ========= */
+  #letter-modal {
+    position: fixed; inset: 0;
+    z-index: 100; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    padding: 1.5rem;
+    /* backdrop */
+    background: rgba(10,2,10,0.0);
+    transition: opacity 0.5s ease, background 0.5s ease;
+  }
+  #letter-modal.open {
+    opacity: 1; pointer-events: all;
+    background: rgba(10,2,10,0.78);
+  }
+
+  .letter-paper {
+    background: linear-gradient(160deg, #fffaf8 0%, #fff4f0 50%, #fff0f5 100%);
+    border-radius: 20px; padding: 2.2rem 2rem 1.8rem; max-width: 400px; width: 100%;
+    box-shadow: 0 30px 80px rgba(201,48,96,0.25), 0 0 0 1px rgba(232,88,122,0.15), inset 0 1px 0 rgba(255,255,255,0.9);
+    max-height: 82vh; overflow-y: auto; position: relative;
+
+    /* entry animation */
+    transform: scale(0.75) translateY(40px);
+    transition: transform 0.6s cubic-bezier(0.34,1.45,0.64,1),
+                opacity 0.4s ease;
+    opacity: 0;
+  }
+  .letter-paper::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, transparent, var(--pink), var(--gold), var(--pink), transparent);
+    border-radius: 20px 20px 0 0; opacity: 0.6;
+  }
+  #letter-modal.open .letter-paper {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+
+  /* CLOSING: paper folds down and shrinks into a point */
+  #letter-modal.closing .letter-paper {
+    transform: scale(0.05) translateY(120px) rotateX(60deg) !important;
+    opacity: 0 !important;
+    transition: transform 0.55s cubic-bezier(0.55,0,0.85,0.1),
+                opacity 0.4s ease 0.1s !important;
+  }
+  #letter-modal.closing {
+    opacity: 0 !important;
+    background: rgba(10,2,10,0) !important;
+    transition: opacity 0.55s ease 0.2s, background 0.55s ease 0.2s !important;
+  }
+
+  .letter-deco { text-align: center; font-size: 1.6rem; margin-bottom: 1.2rem; letter-spacing: 0.3em; }
+  .letter-separator { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 1rem auto; }
+  .letter-text {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.05rem;
+    line-height: 1.9; color: #4a1525; white-space: pre-line;
+  }
+  .letter-sign {
+    font-family: 'Great Vibes', cursive; font-size: 1.8rem;
+    color: var(--rose); text-align: right; margin-top: 1.4rem;
+  }
+
+  /* ── Next button: cinematic "curtain reveal" look ── */
+  .letter-next-btn {
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    margin-top: 1.8rem; position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #e8587a, #c93060);
+    color: white; border: none; border-radius: 50px;
+    padding: 0.9rem 2rem;
+    font-family: 'Jost', sans-serif; font-size: 0.9rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    cursor: pointer; width: 100%;
+    box-shadow: 0 6px 25px rgba(201,48,96,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .letter-next-btn::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
+    transform: translateX(-100%);
+    transition: transform 0s;
+  }
+  .letter-next-btn:hover::after {
+    transform: translateX(100%);
+    transition: transform 0.6s ease;
+  }
+  .letter-next-btn:active { transform: scale(0.97); }
+
+  /* ── MURAL REVEAL OVERLAY ── */
+  #mural-reveal {
+    position: fixed; inset: 0; z-index: 200;
+    pointer-events: none;
+    /* Two curtain halves + central flash */
+    display: flex;
+  }
+  .curtain-half {
+    flex: 1; height: 100%;
+    background: linear-gradient(180deg, #1c0a14 0%, #2a0d1e 100%);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.6s cubic-bezier(0.77,0,0.175,1);
+  }
+  .curtain-half.left  { transform-origin: left center; }
+  .curtain-half.right { transform-origin: right center; }
+
+  #mural-reveal.close-curtain .curtain-half {
+    transform: scaleX(1);
+  }
+  #mural-reveal.open-curtain .curtain-half {
+    transform: scaleX(0);
+    transition: transform 0.7s cubic-bezier(0.77,0,0.175,1) 0.15s;
+  }
+
+  /* heart burst in the middle of curtain */
+  #curtain-heart {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    font-size: 3.5rem; z-index: 210; pointer-events: none;
+    transition: transform 0.35s cubic-bezier(0.34,1.7,0.64,1) 0.55s,
+                opacity 0.3s ease 0.95s;
+    opacity: 0;
+  }
+  #mural-reveal.close-curtain #curtain-heart {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  #mural-reveal.open-curtain #curtain-heart {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  /* ========= SCREEN 3 — MURAL ========= */
+  #s3 {
+    background: #1c1410;
+    overflow: hidden; padding: 0;
+    align-items: stretch; justify-content: stretch;
+  }
+
+  #mural-wall {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      repeating-linear-gradient(95deg, rgba(255,200,130,0.028) 0px, rgba(255,200,130,0.028) 1px, transparent 1px, transparent 52px),
+      repeating-linear-gradient(180deg, rgba(0,0,0,0.09) 0px, rgba(0,0,0,0.09) 1px, transparent 1px, transparent 36px),
+      linear-gradient(168deg, #2e2016 0%, #1c1410 45%, #231a10 100%);
+  }
+  #mural-wall::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0,0,0,0.45) 100%);
+  }
+
+  #lights-strip {
+    position: absolute; top: 0; left: 0; right: 0; height: 32px; z-index: 6; pointer-events: none;
+  }
+  .lights-wire {
+    position: absolute; top: 13px; left: -1%; right: -1%; height: 2.5px;
+    background: #181008; border-radius: 2px; box-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  }
+  .light-bulb {
+    position: absolute; top: 8px; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .light-cap {
+    width: 9px; height: 6px;
+    background: linear-gradient(180deg, #555, #333);
+    border-radius: 2px 2px 0 0;
+  }
+  .light-globe {
+    width: 12px; height: 15px;
+    border-radius: 50% 50% 45% 45%;
+  }
+
+  #grid-svg {
+    position: absolute; inset: 32px 0 0 0; z-index: 1; pointer-events: none;
+  }
+
+  #mural-stage {
+    position: absolute; inset: 32px 0 0 0; z-index: 2;
+  }
+
+  /* Photo reveal animation */
+  .mural-photo {
+    position: absolute;
+    display: flex; flex-direction: column; align-items: center;
+    cursor: pointer;
+    transform-origin: 50% 10px;
+    /* start hidden for staggered reveal */
+    opacity: 0;
+    transform: scale(0.4) rotate(0deg);
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+  }
+  .mural-photo.revealed {
+    opacity: 1;
+  }
+  .mural-photo:active {
+    transform: scale(1.18) !important;
+    z-index: 30;
+    opacity: 1;
+  }
+
+  .tape {
+    position: absolute; top: -11px; left: 50%;
+    transform: translateX(-50%) rotate(var(--tr, 0deg));
+    width: 42px; height: 17px; border-radius: 2px; opacity: 0.88; z-index: 5;
+  }
+
+  .nail {
+    position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+    width: 12px; height: 12px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #e8e8e8, #707070);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.35);
+    z-index: 5;
+  }
+  .nail::after {
+    content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    width: 2.5px; height: 8px;
+    background: linear-gradient(180deg, #888, #444);
+    border-radius: 0 0 1px 1px;
+  }
+
+  .photo-frame-m {
+    border: 5px solid white; overflow: hidden;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.7), 0 2px 6px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(0,0,0,0.08);
+    background: #d8c0cc; position: relative;
+  }
+  .photo-frame-m::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.16) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .photo-frame-m img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  #center-msg {
+    position: absolute; z-index: 10;
+    text-align: center; pointer-events: none;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  #center-msg.revealed { opacity: 1; }
+
+  .center-msg-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(1.55rem, 5.8vw, 2.2rem);
+    color: #fff0f5; line-height: 1.25;
+    text-shadow:
+      0 0 20px rgba(232,88,122,1),
+      0 0 50px rgba(201,48,96,0.6),
+      0 2px 5px rgba(0,0,0,0.55);
+    animation: glowPulse 3s ease-in-out infinite;
+    display: block;
+  }
+  .center-msg-hearts {
+    font-size: 1.3rem; display: block; margin-top: 0.4rem;
+    animation: glowPulse 3s ease-in-out 0.4s infinite;
+  }
+  @keyframes glowPulse {
+    0%,100%{ text-shadow: 0 0 20px rgba(232,88,122,1), 0 0 50px rgba(201,48,96,0.6), 0 2px 5px rgba(0,0,0,0.55); }
+    50%    { text-shadow: 0 0 35px rgba(232,88,122,1), 0 0 80px rgba(201,48,96,0.9), 0 2px 5px rgba(0,0,0,0.55); }
+  }
+
+  .spark {
+    position: absolute; pointer-events: none; z-index: 3; opacity: 0;
+    animation: sparkRise linear infinite;
+  }
+  @keyframes sparkRise {
+    0%  { opacity: 0; transform: translateY(0) scale(1); }
+    15% { opacity: 0.65; }
+    85% { opacity: 0.3; }
+    100%{ opacity: 0; transform: translateY(-75px) scale(0.4); }
+  }
+
+  @keyframes lightGlow {
+    from { opacity: 0.6; }
+    to   { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========= SCREEN 1 ========= -->
+<div class="screen active" id="s1">
+  <div id="s1-bg"></div>
+  <div class="s1-content">
+    <div class="s1-ornament">✦ ❤️ ✦</div>
+    <div id="typed-phrase"><span id="typed-text"></span><span class="cursor-blink" id="cursor"></span></div>
+    <div class="divider-line" id="divider"></div>
+    <div id="sub-phrase">Feliz 5 meses de namoro!!! 🎉</div>
+    <button class="arrow-btn" id="arrow-s1" onclick="goToScreen(2)">
+      <span class="arrow-btn-label">toque para continuar</span>
+      <div class="arrow-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+      </div>
+    </button>
+  </div>
+</div>
+
+<!-- ========= SCREEN 2 ========= -->
+<div class="screen" id="s2">
+  <div id="aurora"></div>
+  <div id="stars-container"></div>
+  <div id="water"></div>
+  <div id="seal-wrap">
+    <!-- heart floats just above the seal's nose -->
+    <span id="spin-heart">🌹</span>
+    <svg class="seal-svg" viewBox="0 0 200 210" xmlns="http://www.w3.org/2000/svg">
+      <!-- shadow -->
+      <ellipse cx="100" cy="203" rx="52" ry="7" fill="rgba(0,0,0,0.18)"/>
+      <!-- body — rounder, cuter -->
+      <ellipse cx="100" cy="148" rx="58" ry="52" fill="#4aa8cc"/>
+      <!-- belly highlight -->
+      <ellipse cx="100" cy="155" rx="36" ry="34" fill="#b8e4f5"/>
+      <!-- head — big and round -->
+      <circle cx="100" cy="78" r="46" fill="#4aa8cc"/>
+      <!-- head highlight -->
+      <ellipse cx="88" cy="62" rx="22" ry="16" fill="#6dc0de" opacity="0.4"/>
+      <!-- ears / bumps -->
+      <ellipse cx="60" cy="44" rx="12" ry="10" fill="#3a98bc"/>
+      <ellipse cx="140" cy="44" rx="12" ry="10" fill="#3a98bc"/>
+      <!-- eyes — big cute eyes -->
+      <ellipse cx="82" cy="72" rx="11" ry="13" fill="#1a1a2e"/>
+      <ellipse cx="118" cy="72" rx="11" ry="13" fill="#1a1a2e"/>
+      <!-- eye shine -->
+      <circle cx="87" cy="67" r="4" fill="white"/>
+      <circle cx="123" cy="67" r="4" fill="white"/>
+      <circle cx="85" cy="72" r="1.5" fill="white" opacity="0.7"/>
+      <circle cx="121" cy="72" r="1.5" fill="white" opacity="0.7"/>
+      <!-- snout -->
+      <ellipse cx="100" cy="90" rx="16" ry="11" fill="#7acce0"/>
+      <!-- nose -->
+      <ellipse cx="100" cy="85" rx="6" ry="4" fill="#1a1a2e"/>
+      <!-- smile -->
+      <path d="M 89 94 Q 100 103 111 94" fill="none" stroke="#1a1a2e" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- blush cheeks -->
+      <ellipse cx="68" cy="87" rx="10" ry="7" fill="#f080a0" opacity="0.45"/>
+      <ellipse cx="132" cy="87" rx="10" ry="7" fill="#f080a0" opacity="0.45"/>
+      <!-- whiskers -->
+      <line x1="55" y1="88" x2="82" y2="92" stroke="#1a1a2e" stroke-width="1.3" stroke-linecap="round"/>
+      <line x1="55" y1="94" x2="82" y2="95" stroke="#1a1a2e" stroke-width="1.3" stroke-linecap="round"/>
+      <line x1="118" y1="92" x2="145" y2="88" stroke="#1a1a2e" stroke-width="1.3" stroke-linecap="round"/>
+      <line x1="118" y1="95" x2="145" y2="94" stroke="#1a1a2e" stroke-width="1.3" stroke-linecap="round"/>
+      <!-- flippers -->
+      <ellipse cx="38" cy="158" rx="22" ry="10" fill="#3a98bc" transform="rotate(-35 38 158)"/>
+      <ellipse cx="162" cy="158" rx="22" ry="10" fill="#3a98bc" transform="rotate(35 162 158)"/>
+      <!-- tail flippers -->
+      <ellipse cx="76" cy="198" rx="20" ry="8" fill="#3a98bc" transform="rotate(18 76 198)"/>
+      <ellipse cx="124" cy="198" rx="20" ry="8" fill="#3a98bc" transform="rotate(-18 124 198)"/>
+    </svg>
+  </div>
+  <div id="envelope-wrap" onclick="openLetter()">
+    <div id="env-label">Encomenda para você... 💌</div>
+    <svg class="envelope-svg" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="envGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f07090"/><stop offset="100%" stop-color="#d04070"/>
+        </linearGradient>
+        <linearGradient id="envFlap" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#d04070"/><stop offset="100%" stop-color="#b02858"/>
+        </linearGradient>
+      </defs>
+      <rect x="5" y="40" width="190" height="105" rx="12" fill="url(#envGrad)" stroke="rgba(180,40,80,0.4)" stroke-width="1.5"/>
+      <path d="M5 40 L100 100 L195 40 Z" fill="url(#envFlap)" stroke="rgba(140,20,60,0.3)" stroke-width="1"/>
+      <line x1="5" y1="145" x2="100" y2="100" stroke="rgba(140,20,60,0.25)" stroke-width="1.5"/>
+      <line x1="195" y1="145" x2="100" y2="100" stroke="rgba(140,20,60,0.25)" stroke-width="1.5"/>
+      <text x="100" y="132" text-anchor="middle" font-size="28">❤️</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ========= LETTER MODAL ========= -->
+<div id="letter-modal">
+  <div class="letter-paper">
+    <div class="letter-deco">💌 &nbsp; 🌹 &nbsp; 💕</div>
+    <div class="letter-separator"></div>
+    <div class="letter-text">Feliz 5 meses meu amor!
+
+Hoje completamos 5 meses do nosso relacionamento, da nossa história, da nossa união, hoje é um dia muitooo especial meu amor.
+
+Eu quero te agradecer meu amor, você é uma pessoa muito importante para mim e para minha vida, sou grato de poder passar esses 5 meses da minha vida ao seu lado, você meu bem é um anjinho na minha vida, é o meu sorriso, a uma das minhas pessoas favoritas nesse mundo todo, em meus momentos difíceis você estava comigo, em meus dias ruins você foi quem me animou, quem me incentivou, e foi quem melhorou muito a minha vida. Eu te agradeço meu bem, por sempre ter ficado ao meu lado, por sempre ter estado comigo e tambem por cada momento que passamos juntos nesses 5 meses, cada risada, cada momento que me senti amado (foram vários) e que me senti seguro com você (me sinto muito segurinho kkkkk), cada momento ao seu lado sempre foi único e especial e sou grato por te ter na minha vida e por ser seu namorado e poder ser amado por você!
+
+Me desculpe por as vezes ser alguém difícil, alguém meio chato de suportar, de entender, de ser meio irritante as vezes sabe kkkkk, mas quero que você sempre saiba, eu te amo muito meu amor, não como o meu coração, pq um dia ele vai parar, não com sentimentos pq alguns meus não são tão bons assim,não com minha alma pq ela está meio suja, mas eu te amo além do meu ser, além dessa vida, eu te amo com cada parte boa minha, e espero que sempre você possa guardar esse amor no seu coração, e sempre poder se sentir amada, pois enquanto eu existir você sempre será a pessoa mais amada desse mundo, e espero que eu possa sempre demonstrar isso bem.
+
+Sempre que você se sentir mal, se sentir perdida, sempre se sentir insegura ou sempre que sentir que esta com problemas, eu sempre vou estar aqui ao seu lado, e sempre vou te apoiar da melhor forma que eu puder, e sempre vou estar aqui como seu amigo, como seu namorado, como seu parceiro sempre, sempre que se sentir insegura eu vou estar lá pra te elogiar, te chamar de linda, de perfeita, de gostosa, e se eu pudesse beijava casa insegurança sua, sempre que se sentir perdida eu vou estar lá pra ser sua direção, e sempre vou estar com você meu amor! 
+</div>
+    <div class="letter-separator"></div>
+    <div class="letter-sign">Eu te amo, muito!
+Do seu amor, Jojo 🤍</div>
+    <button class="letter-next-btn" id="next-btn" onclick="closeLetter()">Agora uma parte da nossa história ✦</button>
+  </div>
+</div>
+
+<!-- ========= MURAL CURTAIN REVEAL ========= -->
+<div id="mural-reveal">
+  <div class="curtain-half left"></div>
+  <div class="curtain-half right"></div>
+  <div id="curtain-heart">💕</div>
+</div>
+
+<!-- ========= SCREEN 3 — MURAL ========= -->
+<div class="screen" id="s3">
+  <div id="mural-wall"></div>
+  <div id="lights-strip"><div class="lights-wire"></div></div>
+  <svg id="grid-svg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"></svg>
+
+  <div id="mural-stage">
+    <div class="mural-photo" id="mp1">
+      <div class="tape" style="background:rgba(244,184,200,0.9);--tr:-7deg;"></div>
+      <div class="photo-frame-m" style="width:86px;height:86px;">
+        <img src="https://i.ibb.co/SXvVX7Zv/Whats-App-Image-2026-05-15-at-18-50-14-5.jpg" alt="foto 1" loading="lazy">
+      </div>
+    </div>
+    <div class="mural-photo" id="mp2">
+      <div class="tape" style="background:rgba(168,216,200,0.9);--tr:5deg;"></div>
+      <div class="photo-frame-m" style="width:80px;height:80px;">
+        <img src="https://i.ibb.co/JjfHxq7y/Whats-App-Image-2026-05-15-at-18-50-15.jpg" alt="foto 2" loading="lazy">
+      </div>
+    </div>
+    <div class="mural-photo" id="mp3">
+      <div class="nail"></div>
+      <div class="photo-frame-m" style="width:88px;height:88px;">
+        <img src="https://i.ibb.co/vx6fH8br/Whats-App-Image-2026-05-15-at-18-50-14-4.jpg" alt="foto 3" loading="lazy">
+      </div>
+    </div>
+    <div class="mural-photo" id="mp4">
+      <div class="tape" style="background:rgba(244,212,160,0.9);--tr:4deg;"></div>
+      <div class="photo-frame-m" style="width:84px;height:84px;">
+        <img src="https://i.ibb.co/PSVKTdM/Whats-App-Image-2026-05-15-at-18-50-14-3.jpg" alt="foto 4" loading="lazy">
+      </div>
+    </div>
+    <div class="mural-photo" id="mp5">
+      <div class="nail"></div>
+      <div class="photo-frame-m" style="width:86px;height:86px;">
+        <img src="https://i.ibb.co/ZpCngKDz/Whats-App-Image-2026-05-15-at-18-50-09.jpg" alt="foto 5" loading="lazy">
+      </div>
+    </div>
+    <div class="mural-photo" id="mp6">
+      <div class="tape" style="background:rgba(200,184,232,0.9);--tr:-5deg;"></div>
+      <div class="photo-frame-m" style="width:80px;height:80px;">
+        <img src="https://i.ibb.co/LXT73q3Z/Whats-App-Image-2026-05-15-at-18-50-09-1.jpg" alt="foto 6" loading="lazy">
+      </div>
+    </div>
+    <div class="mural-photo" id="mp7">
+      <div class="nail"></div>
+      <div class="photo-frame-m" style="width:98px;height:98px;border-color:#f9c0d0;border-width:6px;">
+        <img src="https://i.ibb.co/Cprt3wVt/Whats-App-Image-2026-05-15-at-18-50-06.jpg" alt="foto 7" loading="lazy">
+      </div>
+    </div>
+
+    <div id="center-msg">
+      <span class="center-msg-text">Eu te amo muito, meu bem!</span>
+      <span class="center-msg-hearts">💕 ❤️ 💕</span>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentScreen = 1;
+
+function goToScreen(n) {
+  document.getElementById('s' + currentScreen).classList.remove('active');
+  currentScreen = n;
+  document.getElementById('s' + n).classList.add('active');
+  if (n === 2) startSealScene();
+  if (n === 3) startMural();
+}
+
+// ---- S1 ----
+(function createBokeh() {
+  const bg = document.getElementById('s1-bg');
+  const colors = ['#f5a0b8','#e8587a','#f0c0d0','#c8956c','#f7d0e0','#e090a8'];
+  const sizes = [120,180,90,150,200,110];
+  [[10,15],[70,5],[85,50],[15,65],[50,80],[90,85],[30,40],[60,30]].forEach((pos,i) => {
+    const d = document.createElement('div');
+    d.className = 'bokeh';
+    const s = sizes[i%sizes.length];
+    d.style.cssText = `width:${s}px;height:${s}px;left:${pos[0]}%;top:${pos[1]}%;background:${colors[i%colors.length]};animation-duration:${8+i*2.5}s;animation-delay:${-i*1.8}s;`;
+    bg.appendChild(d);
+  });
+  ['🌸','🌹','✿','❀','💕','✦'].forEach((e,i) => {
+    for (let j=0;j<3;j++) {
+      const p = document.createElement('div');
+      p.className = 'petal'; p.textContent = e;
+      p.style.cssText = `left:${Math.random()*100}%;font-size:${0.7+Math.random()*0.7}rem;animation-duration:${7+Math.random()*8}s;animation-delay:${Math.random()*9}s;`;
+      bg.appendChild(p);
+    }
+  });
+})();
+
+const phrase = "Feliz 5 Meses, meu amor!";
+const typedEl = document.getElementById('typed-text');
+const cursor = document.getElementById('cursor');
+const sub = document.getElementById('sub-phrase');
+const divider = document.getElementById('divider');
+const arrow = document.getElementById('arrow-s1');
+
+function typePhrase() {
+  let i = 0;
+  const iv = setInterval(() => {
+    typedEl.textContent += phrase[i++];
+    if (i >= phrase.length) {
+      clearInterval(iv);
+      setTimeout(() => {
+        cursor.classList.add('hidden');
+        divider.classList.add('show');
+        setTimeout(() => { sub.classList.add('show'); setTimeout(() => arrow.classList.add('show'), 800); }, 300);
+      }, 500);
+    }
+  }, 75);
+}
+setTimeout(typePhrase, 700);
+
+// ---- S2 ----
+function startSealScene() {
+  const sc = document.getElementById('stars-container');
+  for (let i=0;i<55;i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = 1+Math.random()*2.5;
+    s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*75}%;animation-delay:${Math.random()*3}s;animation-duration:${1.5+Math.random()*2.5}s;`;
+    sc.appendChild(s);
+  }
+  setTimeout(() => {
+    document.getElementById('seal-wrap').classList.add('exit');
+    setTimeout(() => document.getElementById('envelope-wrap').classList.add('show'), 1400);
+  }, 7000);
+}
+
+function openLetter() {
+  document.getElementById('letter-modal').classList.add('open');
+}
+
+// ---- Cinematic letter → mural transition ----
+function closeLetter() {
+  const modal = document.getElementById('letter-modal');
+  const reveal = document.getElementById('mural-reveal');
+
+  // Disable button to prevent double-tap
+  document.getElementById('next-btn').style.pointerEvents = 'none';
+
+  // 1. Paper shrinks & modal fades
+  modal.classList.add('closing');
+  modal.classList.remove('open');
+
+  // 2. After paper collapses (~300ms), curtains sweep in from sides
+  setTimeout(() => {
+    reveal.classList.add('close-curtain');
+  }, 300);
+
+  // 3. At peak of curtain (curtains fully closed ~900ms total), switch to screen 3
+  setTimeout(() => {
+    modal.classList.remove('closing');
+    modal.style.display = 'none';
+    goToScreen(3);
+  }, 900);
+
+  // 4. Curtains open revealing the mural, heart bursts then fades
+  setTimeout(() => {
+    reveal.classList.add('open-curtain');
+  }, 1100);
+
+  // 5. Fully remove reveal overlay after animation completes
+  setTimeout(() => {
+    reveal.classList.remove('close-curtain');
+    reveal.classList.remove('open-curtain');
+    // restore modal for potential reuse
+    modal.style.display = 'flex';
+    document.getElementById('next-btn').style.pointerEvents = '';
+  }, 2200);
+}
+
+// ---- S3: MURAL ----
+function startMural() {
+  const W = window.innerWidth;
+  const H = window.innerHeight - 32;
+
+  // Grid SVG
+  const svg = document.getElementById('grid-svg');
+  svg.style.width = W + 'px';
+  svg.style.height = H + 'px';
+  const cols = 5, rows = 7;
+  const cW = W / cols, rH = H / rows;
+  let inner = '';
+  for (let c=1;c<cols;c++)
+    inner += `<line x1="${c*cW}" y1="0" x2="${c*cW}" y2="${H}" stroke="#c8a060" stroke-width="1" opacity="0.18"/>`;
+  for (let r=1;r<rows;r++)
+    inner += `<line x1="0" y1="${r*rH}" x2="${W}" y2="${r*rH}" stroke="#c8a060" stroke-width="1" opacity="0.18"/>`;
+  for (let c=0;c<=cols;c++)
+    for (let r=0;r<=rows;r++)
+      inner += `<circle cx="${c*cW}" cy="${r*rH}" r="3.5" fill="#c8a060" opacity="0.28"/>`;
+  svg.innerHTML = inner;
+
+  // Build lights
+  const strip = document.getElementById('lights-strip');
+  const lc = ['rgba(255,224,130,0.92)','rgba(255,160,170,0.88)','rgba(160,215,255,0.88)','rgba(195,255,185,0.85)','rgba(255,195,230,0.88)'];
+  const nL = Math.floor(W / 50);
+  for (let i=0;i<=nL;i++) {
+    const b = document.createElement('div');
+    b.className = 'light-bulb';
+    b.style.left = (i/nL*100)+'%';
+    const c = lc[i%lc.length];
+    const dur = (1.4+Math.random()*2).toFixed(1);
+    const delay = (Math.random()*2).toFixed(1);
+    b.innerHTML = `<div class="light-cap"></div><div class="light-globe" style="background:${c};box-shadow:0 0 8px 4px ${c},0 0 20px 7px ${c.replace(/[\d.]+\)$/,'0.3)')};animation:lightGlow ${dur}s ease-in-out ${delay}s infinite alternate;"></div>`;
+    strip.appendChild(b);
+  }
+
+  // Photo layout
+  const layout = [
+    { id:'mp1', gx:0.5, gy:0.55, rot:-6 },
+    { id:'mp2', gx:2.5, gy:0.5,  rot: 3 },
+    { id:'mp3', gx:4.5, gy:0.55, rot:-3 },
+    { id:'mp4', gx:0.5, gy:5.9,  rot: 5 },
+    { id:'mp5', gx:2.5, gy:6.2,  rot:-4 },
+    { id:'mp6', gx:4.5, gy:5.9,  rot: 2 },
+    { id:'mp7', gx:0.5, gy:3.2,  rot:-2 },
+  ];
+
+  layout.forEach(({ id, gx, gy, rot }) => {
+    const el = document.getElementById(id);
+    const frame = el.querySelector('.photo-frame-m');
+    const fw = parseInt(frame.style.width) || 86;
+    const fh = parseInt(frame.style.height) || 86;
+    el.style.left = (gx/cols*W - fw/2) + 'px';
+    el.style.top  = (gy/rows*H - fh/2) + 'px';
+    // store final rotation for reveal
+    el.dataset.rot = rot;
+    el.style.transform = `scale(0.4) rotate(${rot}deg)`;
+  });
+
+  // Center message — positioned via CSS (top:50% transform)
+  const msg = document.getElementById('center-msg');
+
+  // Staggered photo reveal — triggered after curtains open (~1.3s from goToScreen call)
+  const photoIds = layout.map(l => l.id);
+  photoIds.forEach((id, i) => {
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      const rot = el.dataset.rot;
+      el.style.transition = `transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease`;
+      el.style.transform = `rotate(${rot}deg) scale(1)`;
+      el.classList.add('revealed');
+    }, 400 + i * 120);
+  });
+
+  // Message fades in last
+  setTimeout(() => {
+    msg.classList.add('revealed');
+  }, 400 + photoIds.length * 120 + 200);
+
+  // Floating sparks
+  const stage = document.getElementById('mural-stage');
+  const sparks = ['✨','💫','🌸','❤️','💕','✦','🌹'];
+  for (let i=0;i<20;i++) {
+    const s = document.createElement('div');
+    s.className = 'spark'; s.textContent = sparks[i%sparks.length];
+    s.style.cssText = `left:${5+Math.random()*90}%;bottom:${Math.random()*50}%;font-size:${0.55+Math.random()*0.65}rem;animation-duration:${3+Math.random()*4}s;animation-delay:${Math.random()*5}s;`;
+    stage.appendChild(s);
+  }
+}
+</script>
+</body>
+</html>
